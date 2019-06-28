@@ -1,41 +1,13 @@
-// You don't actually want to fill *this* value in on line 9, but you'll see
-// other places in this file where you'll replace the FILL_ME_IN with a
-// different value.
-var FILL_ME_IN = 'Fill this value in';
+function concatCredit(base, length) {
+  let baseLength = base.toString().length;
+  let result = base.toString();
+  // debugger;
+  for (let i = 0; i < length - baseLength; i++) {
+    result += Math.floor(Math.random() * 10)
+  }
+  return result;
+}
 
-// describe('Introduction to Mocha Tests - READ ME FIRST', function() {
-//   // A Mocha test is just a function!
-//   // If the function throws an error when run, it fails.
-//   // If it doesn't throw an error when run, it doesn't fail.
-//   // To read more about mocha, visit mochajs.org
-//
-//   // Once you've read and understood this section, please comment it out.
-//   // You will not be able to proceed with a failing test.
-//
-//   it('Throws an error so it fails', function() {
-//     throw new Error('Delete me!');
-//   });
-//
-//   it('Doesn\'t throw an error, so it doesn\'t fail', function() {
-//     // This test doesn't really test anything at all! It will pass no matter what.
-//     var even = function(num){
-//       return num/2 === 0;
-//     }
-//     return even(10) === true;
-//   });
-//
-//   // In tests, we want to compare the expected behavior to the actual behavior.
-//   // A test should only fail if the expected behavior doesn't match the actual.
-//   it('Throws an error when expected behavior does not match actual behavior', function() {
-//     var even = function(num){
-//       return num/2 === 0;
-//     }
-//
-//     if(even(10) !== true) {
-//       throw new Error('10 should be even!');
-//     }
-//   });
-// });
 describe('Diner\'s Club', function() {
   it('has a prefix of 38 and a length of 14', function() {
     if (detectNetwork('38345678901234') !== 'Diner\'s Club') {
@@ -275,22 +247,12 @@ describe('Maestro', function() {
 describe('China UnionPay', function() {
   var expect = chai.expect;
   let base = '';
-  let title = `has a prefix of ${base} and a length of ${length}`;
   let ccNumber = '';
-  // this cb function doesn't seem to work, when used in the for loops at lines 301, 309, 316 (Mocha lists the functions as pending ... wny??)
+  // this cb function doesn't seem to work, when used in the for loops at about lines 301, 309, 316 (Mocha lists the functions as pending ... wny??)
   let cb = function(ccNumber) {
     expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
   }
   // China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
-
-  function concatCredit(base, length) {
-    let baseLength = base.toString().length;
-    let result = base.toString();
-    for (let i = 0; i <= length - baseLength; i++) {
-      result += Math.floor(Math.random() * 10)
-    }
-    return result;
-  }
 
   for (let length = 16; length <= 19; length++) {
     for (base = 622126; base <= 622925; base++) {
@@ -315,10 +277,21 @@ describe('China UnionPay', function() {
     }
   }
 });
-describe('Switch', function() {});
-describe('This is a test', function() {
+describe('Switch', function() {
   var expect = chai.expect;
-  it('Test', function() {
-    expect('test').to.equal('test');
-  })
-})
+  let base = '';
+  let ccNumber = '';
+  let lengthsArr = [16, 18, 19];
+  let baseArr = [4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759];
+  for (let i = 0; i < lengthsArr.length; i++) {
+    for (let j = 0; j < baseArr.length; j++) {
+      // debugger;
+
+      ccNumber = concatCredit(baseArr[j], lengthsArr[i]);
+      // console.log(ccNumber);
+      it(`has a prefix of ${baseArr[j]} and a length of ${lengthsArr[i]}`, function() {
+        expect(detectNetwork(ccNumber)).to.equal('Switch');
+      });
+    }
+  }
+});

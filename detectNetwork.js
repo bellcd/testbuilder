@@ -10,6 +10,8 @@
 var detectNetwork = function(cardNumber) {
   // Note: `cardNumber` will always be a string
   // The Diner's Club network always starts with a 38 or 39 and is 14 digits long
+  // Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+
   // The American Express network always starts with a 34 or 37 and is 15 digits long
   // Visa always has a prefix of 4 and a length of 13, 16, or 19.
   // MasterCard always has a prefix of 51, 52, 53, 54, or 55 and a length of 16.
@@ -18,7 +20,7 @@ var detectNetwork = function(cardNumber) {
   // Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
 
   // China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
-  // Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+
 
 
   let name = '';
@@ -31,6 +33,8 @@ var detectNetwork = function(cardNumber) {
 
   if (length === 14 && (firstTwoNum === 38 || firstTwoNum === 39)) {
     name = `Diner's Club`;
+  } else if ((length === 16 || length === 18 || length === 19) && (firstFourNum === 4903 || firstFourNum === 4905 || firstFourNum === 4911 || firstFourNum === 4936 || firstSixNum === 564182 || firstSixNum === 633110 || firstFourNum === 6333 || firstFourNum === 6759)) {
+    name = 'Switch';
   } else if (length === 15 && (firstTwoNum === 34 || firstTwoNum === 37)) {
     name = 'American Express';
   } else if ((length === 13 || length === 16 || length === 19) && (firstOneNum === 4)) {
@@ -44,8 +48,7 @@ var detectNetwork = function(cardNumber) {
   } else if ((length >= 16 || length <= 19) && ((firstSixNum >= 622126 && firstSixNum <= 622295) || (firstThreeNum >= 624 && firstThreeNum <= 626) || (firstFourNum >= 6282 && firstFourNum <= 6288))) {
     name = 'China UnionPay';
   } else {
-    name = "We don't know!";
+    name = "unknown";
   }
   return name;
-  // Once you've read this, go ahead and try to implement this function, then return to the console.
 };
