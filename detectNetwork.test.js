@@ -49,7 +49,6 @@ describe('Diner\'s Club', function() {
     }
   });
 });
-
 describe('American Express', function() {
   // It can get annoying to keep typing the if/throw, so here is a
   // helper function to throw an error if the input statement isn't true.
@@ -68,7 +67,6 @@ describe('American Express', function() {
     assert(detectNetwork('373456789012345') === 'American Express');
   });
 });
-
 describe('Visa', function() {
   // Chai is an entire library of helper functions for tests!
   // Chai provides an assert that acts the same as our previous assert.
@@ -89,7 +87,6 @@ describe('Visa', function() {
     assert(detectNetwork('4123456789012345678') === 'Visa');
   });
 });
-
 describe('MasterCard', function() {
   // Chai lets you write more human-readable tests that throw helpful errors.
   // Expect syntax is one way to do this, but there are others.
@@ -118,7 +115,6 @@ describe('MasterCard', function() {
   })
 
 });
-
 describe('Discover', function() {
   // Tests without a function will be marked as "pending" and not run
   // Implement these tests (and others) and make them pass!
@@ -173,7 +169,6 @@ describe('Discover', function() {
     expect(detectNetwork('6541645342551068765')).to.equal('Discover');
   });
 });
-
 describe('Maestro', function() {
   // Write full test coverage for the Maestro card
   var expect = chai.expect;
@@ -277,3 +272,53 @@ describe('Maestro', function() {
     expect(detectNetwork('6304051734981039648')).to.equal('Maestro');
   });
 });
+describe('China UnionPay', function() {
+  var expect = chai.expect;
+  let base = '';
+  let title = `has a prefix of ${base} and a length of ${length}`;
+  let ccNumber = '';
+  // this cb function doesn't seem to work, when used in the for loops at lines 301, 309, 316 (Mocha lists the functions as pending ... wny??)
+  let cb = function(ccNumber) {
+    expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
+  }
+  // China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+
+  function concatCredit(base, length) {
+    let baseLength = base.toString().length;
+    let result = base.toString();
+    for (let i = 0; i <= length - baseLength; i++) {
+      result += Math.floor(Math.random() * 10)
+    }
+    return result;
+  }
+
+  for (let length = 16; length <= 19; length++) {
+    for (base = 622126; base <= 622925; base++) {
+      ccNumber = concatCredit(base, length);
+      it(`has a prefix of ${base} and a length of ${length}`, function() {
+        expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
+      });
+    }
+
+    for (base = 624; base <= 626; base++) {
+      ccNumber = concatCredit(base, length);
+      it(`has a prefix of ${base} and a length of ${length}`, function() {
+        expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
+      });
+    }
+
+    for (base = 6282; base <= 6288; base++) {
+      ccNumber = concatCredit(base, length);
+      it(`has a prefix of ${base} and a length of ${length}`, function() {
+        expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
+      });
+    }
+  }
+});
+describe('Switch', function() {});
+describe('This is a test', function() {
+  var expect = chai.expect;
+  it('Test', function() {
+    expect('test').to.equal('test');
+  })
+})
