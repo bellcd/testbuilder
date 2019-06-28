@@ -21,9 +21,11 @@ var detectNetwork = function(cardNumber) {
   let name = '';
   // debugger;
   let length = cardNumber.length;
-  let firstTwo = cardNumber.slice(0, 2);
-  let firstTwoNum = Number.parseInt(firstTwo);
-  let firstOneNum = Number.parseInt(firstTwo[0]);
+  let firstFour = cardNumber.slice(0, 4);
+  let firstTwoNum = Number.parseInt(firstFour.slice(0, 2));
+  let firstOneNum = Number.parseInt(firstFour[0]);
+  let firstFourNum = Number.parseInt(firstFour);
+  let firstThreeNum = Number.parseInt(firstFour.slice(0, 3));
 
   if (length === 14 && (firstTwoNum === 38 || firstTwoNum === 39)) {
     name = `Diner's Club`;
@@ -33,6 +35,10 @@ var detectNetwork = function(cardNumber) {
     name = 'Visa';
   } else if ((length === 16) && (firstTwoNum === 51 || firstTwoNum === 52 || firstTwoNum === 53 || firstTwoNum === 54 || firstTwoNum === 55)) {
     name = 'MasterCard';
+  } else if ((length === 16 || length === 19) && (firstFourNum === 6011 || (firstThreeNum >= 644 && firstThreeNum <= 649) || firstTwoNum === 65)) {
+    name = 'Discover';
+  } else if ((length >= 12 && length <= 19) && (firstFourNum === 5018 || firstFourNum === 5020 || firstFourNum === 5038 || firstFourNum === 6304)) {
+    name = 'Maestro';
   }
   return name;
   // Once you've read this, go ahead and try to implement this function, then return to the console.
