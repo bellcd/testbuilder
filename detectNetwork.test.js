@@ -1,10 +1,10 @@
 function concatCredit(base, length) {
   let baseLength = base.toString().length;
   let result = base.toString();
-  // debugger;
   for (let i = 0; i < length - baseLength; i++) {
     result += Math.floor(Math.random() * 10)
   }
+  console.log('base: ', base, 'length: ', length, 'result: ', result);
   return result;
 }
 
@@ -255,7 +255,7 @@ describe('China UnionPay', function() {
   // China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
 
   for (let length = 16; length <= 19; length++) {
-    for (base = 622126; base <= 622925; base++) {
+    for (let base = 622126; base <= 622925; base++) {
       ccNumber = concatCredit(base, length);
       it(`has a prefix of ${base} and a length of ${length}`, function() {
         expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
