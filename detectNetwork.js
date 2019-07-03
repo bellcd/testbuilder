@@ -45,7 +45,7 @@ var detectNetwork = function(cardNumber) {
     name = 'Discover';
   } else if ((length >= 12 && length <= 19) && (firstFourNum === 5018 || firstFourNum === 5020 || firstFourNum === 5038 || firstFourNum === 6304)) {
     name = 'Maestro';
-  } else if ((length >= 16 || length <= 19) && ((firstSixNum >= 622126 && firstSixNum <= 622295) || (firstThreeNum >= 624 && firstThreeNum <= 626) || (firstFourNum >= 6282 && firstFourNum <= 6288))) {
+  } else if ((length >= 16 || length <= 19) && ((firstSixNum >= 622126 && firstSixNum <= 622925) || (firstThreeNum >= 624 && firstThreeNum <= 626) || (firstFourNum >= 6282 && firstFourNum <= 6288))) {
     name = 'China UnionPay';
   } else {
     name = "unknown";

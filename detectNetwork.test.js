@@ -4,7 +4,6 @@ function concatCredit(base, length) {
   for (let i = 0; i < length - baseLength; i++) {
     result += Math.floor(Math.random() * 10)
   }
-  console.log('base: ', base, 'length: ', length, 'result: ', result);
   return result;
 }
 
@@ -246,50 +245,40 @@ describe('Maestro', function() {
 });
 describe('China UnionPay', function() {
   var expect = chai.expect;
-  let base = '';
-  let ccNumber = '';
-  // this cb function doesn't seem to work, when used in the for loops at about lines 301, 309, 316 (Mocha lists the functions as pending ... wny??)
-  let cb = function(ccNumber) {
-    expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
-  }
   // China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+
+  function itTest(base, length) {
+    it(`has a prefix of ${base} and a length of ${length}`, function() {
+      expect(detectNetwork(concatCredit(base, length))).to.equal('China UnionPay');
+    });
+  }
 
   for (let length = 16; length <= 19; length++) {
     for (let base = 622126; base <= 622925; base++) {
-      ccNumber = concatCredit(base, length);
-      it(`has a prefix of ${base} and a length of ${length}`, function() {
-        expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
-      });
+      itTest(base, length);
     }
 
-    for (base = 624; base <= 626; base++) {
-      ccNumber = concatCredit(base, length);
-      it(`has a prefix of ${base} and a length of ${length}`, function() {
-        expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
-      });
+    for (let base = 624; base <= 626; base++) {
+      itTest(base, length);
     }
 
-    for (base = 6282; base <= 6288; base++) {
-      ccNumber = concatCredit(base, length);
-      it(`has a prefix of ${base} and a length of ${length}`, function() {
-        expect(detectNetwork(ccNumber)).to.equal('China UnionPay');
-      });
+    for (let base = 6282; base <= 6288; base++) {
+      itTest(base, length);
     }
   }
 });
 describe('Switch', function() {
   var expect = chai.expect;
   let base = '';
-  let ccNumber = '';
+  let ccNumber = ''; // this works (1)
   let lengthsArr = [16, 18, 19];
   let baseArr = [4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759];
   for (let i = 0; i < lengthsArr.length; i++) {
     for (let j = 0; j < baseArr.length; j++) {
-      // debugger;
-
-      ccNumber = concatCredit(baseArr[j], lengthsArr[i]);
-      // console.log(ccNumber);
+      // let ccNumber = concatCredit(baseArr[j], lengthsArr[i]); // this works (2)
+      // ccNumber = concatCredit(baseArr[j], lengthsArr[i]); // this does not work (1) why?
       it(`has a prefix of ${baseArr[j]} and a length of ${lengthsArr[i]}`, function() {
+        ccNumber = concatCredit(baseArr[j], lengthsArr[i]); // this works (1)
         expect(detectNetwork(ccNumber)).to.equal('Switch');
       });
     }
