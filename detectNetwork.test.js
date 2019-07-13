@@ -276,7 +276,8 @@ describe('Switch', function() {
   for (let i = 0; i < lengthsArr.length; i++) {
     for (let j = 0; j < baseArr.length; j++) {
       // let ccNumber = concatCredit(baseArr[j], lengthsArr[i]); // this works (2)
-      // ccNumber = concatCredit(baseArr[j], lengthsArr[i]); // this does not work (1) why?
+      // TODO: this does not work (1) why?
+      // ccNumber = concatCredit(baseArr[j], lengthsArr[i]); 
       it(`has a prefix of ${baseArr[j]} and a length of ${lengthsArr[i]}`, function() {
         ccNumber = concatCredit(baseArr[j], lengthsArr[i]); // this works (1)
         expect(detectNetwork(ccNumber)).to.equal('Switch');
